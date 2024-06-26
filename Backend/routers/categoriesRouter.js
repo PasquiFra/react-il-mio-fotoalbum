@@ -13,7 +13,6 @@ router.use("/", loggedUser)
 router.post("/", store);
 
 router.get("/:name", show)
-router.put("/:name", update)
 router.delete("/:name", destroy)
 
 module.exports = router

@@ -70,11 +70,19 @@ const storeFromPhotos = async (req, res, categories) => {
 }
 
 const show = async (req, res) => {
+    const name = req.params.name
+    try {
+        const category = await prisma.category.findUnique({
+            where: { name: name }
+        });
+        if (!category) {
+            throw new Error("Nessuna categoria trovata")
+        }
+        res.status(200).send(category)
 
-}
-
-const update = async (req, res) => {
-
+    } catch (err) {
+        errorHandler(err, req, res);
+    }
 }
 
 const destroy = async (req, res) => {
@@ -113,5 +121,5 @@ const destroy = async (req, res) => {
 }
 
 module.exports = {
-    index, store, show, update, destroy, storeFromPhotos
+    index, store, show, destroy, storeFromPhotos
 }
