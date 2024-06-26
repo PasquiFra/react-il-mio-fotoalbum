@@ -85,6 +85,27 @@ const store = async (req, res) => {
 
 const show = async (req, res) => {
 
+    const title = req.params.title
+
+    try {
+
+        const photo = await prisma.photo.findUnique({
+            where: {
+                title: title
+            },
+            include: {
+                category: {
+                    select: { name: true }
+                }
+            }
+        })
+
+        return res.status(200).json({ data: photo })
+
+    } catch (err) {
+
+        errorHandler(err, req, res);
+    }
 }
 
 const update = async (req, res) => {
