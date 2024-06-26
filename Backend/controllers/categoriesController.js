@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 // import dei moduli
 const errorHandler = require('../middlewares/errorHandler')
-
+const { getUserId } = require("../utils/getUserId");
 
 const index = async (req, res) => {
 
@@ -78,7 +78,38 @@ const update = async (req, res) => {
 }
 
 const destroy = async (req, res) => {
+    const name = req.params.name
+    try {
+        // Cerco la categoria da cancellare
+        const categoryToDelete = (await prisma.category.findUnique({
+            where: { name: name }
+        }))
 
+        if (!categoryToDelete) {
+            throw new Error("La categoria non è stata trovata", 404)
+        }
+
+        // validazione dell'utente tramite token. ricavo le info dell'utente dal token 
+        // ed estrapolo l'ID verificando con il DB con getUserId(token)
+        const authHeader = req.headers.authorization;
+        const token = authHeader && authHeader.split(" ")[1];
+
+        const userId = await getUserId(token)
+
+        // verifico che lo userId della foto corrisponda allo userId dell'utente loggato
+        if (!userId) {
+            throw new Error("Non sei autorizzato a cancellare questa categoria", 405)
+        } else {
+            await prisma.category.delete({
+                where: { name: name }
+            })
+        }
+
+        return res.status(200).send(`Categoria con nome ${categoryToDelete.name} eliminata`)
+
+    } catch (err) {
+        errorHandler(err, req, res);
+    }
 }
 
 module.exports = {

@@ -5,7 +5,7 @@ const router = express.Router();
 const { loggedUser } = require("../middlewares/authentication");
 const { index, store, show, update, destroy } = require('../controllers/categoriesController')
 
-// Rotte /photos 
+// Rotte /categories 
 router.get("/", index);
 
 router.use("/", loggedUser)
