@@ -114,6 +114,42 @@ const update = async (req, res) => {
 
 const destroy = async (req, res) => {
 
+    const title = req.params.title
+
+    try {
+
+        // Cerco la foto da cancellare
+        const photoToDelete = (await prisma.photo.findUnique({
+            where: { title: title }
+        }))
+
+        if (!photoToDelete) {
+            throw new Error("La foto non è stata trovata", 404)
+        }
+
+        // validazione dell'utente tramite token. ricavo le info dell'utente dal token 
+        // ed estrapolo l'ID verificando con il DB con getUserId(token)
+        const authHeader = req.headers.authorization;
+        const token = authHeader && authHeader.split(" ")[1];
+
+        const userId = await getUserId(token)
+        const photoUserId = photoToDelete.userId
+
+        //! verifico che lo userId del post da cambiare corrisponda allo userId dell'utente loggato
+        if (userId != photoUserId) {
+            throw new Error("Non sei autorizzato a cancellare questa foto", 405)
+        } else {
+            deleteFile(photoToDelete.image, 'photos');
+            await prisma.photo.delete({
+                where: { title: title }
+            })
+        }
+
+        return res.status(200).send(`Foto con titolo ${photoToDelete.title} eliminata`)
+
+    } catch (err) {
+        errorHandler(err, req, res);
+    }
 }
 
 module.exports = {
