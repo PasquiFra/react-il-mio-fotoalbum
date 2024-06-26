@@ -48,8 +48,6 @@ const register = async (req, res) => {
     try {
         const { username, email, password } = req.body
 
-        console.log("req.file", req.file, "image", req.file.filename)
-
         // se il tipo di file non è "image" lo cancello
         if (!req.file.mimetype.includes('image')) {
             req.file?.filename && deleteFile(req.file.filename, 'userPic');
