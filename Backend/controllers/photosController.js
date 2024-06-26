@@ -13,7 +13,7 @@ const { storeFromPhotos } = require('../controllers/categoriesController')
 
 const index = async (req, res) => {
 
-    const { category } = req.query
+    const { category, searchTerm } = req.query
     try {
         if (req.query && category) {
 
@@ -33,6 +33,32 @@ const index = async (req, res) => {
                 }
             })
             return res.status(200).json({ data: photos })
+        } else if (req.query && searchTerm) {
+
+            const photos = await prisma.photo.findMany({
+                where: {
+                    visible: true,
+                    OR: [
+                        {
+                            title: {
+                                contains: searchTerm
+                            }
+                        },
+                        {
+                            description: {
+                                contains: searchTerm
+                            }
+                        }
+                    ]
+                },
+                include: {
+                    category: {
+                        select: { name: true }
+                    }
+                }
+            })
+            return res.status(200).json({ data: photos })
+
         } else {
 
             const photos = await prisma.photo.findMany({
