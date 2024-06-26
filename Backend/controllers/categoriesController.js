@@ -8,6 +8,16 @@ const errorHandler = require('../middlewares/errorHandler')
 
 const index = async (req, res) => {
 
+    try {
+        const categories = await prisma.category.findMany();
+        if (!categories) {
+            throw new Error("Nessuna categoria trovata ")
+        }
+        res.status(200).send(categories)
+
+    } catch (err) {
+        errorHandler(err, req, res);
+    }
 }
 
 const store = async (req, res) => {
@@ -25,7 +35,7 @@ const store = async (req, res) => {
             const createCategory = await prisma.category.create({ name });
             res.status(200).send(createCategory)
         } else {
-            throw new Error("Tag già esistente")
+            throw new Error("Categoria già esistente")
         }
 
     } catch (err) {
