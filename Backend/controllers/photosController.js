@@ -13,6 +13,25 @@ const { storeFromPhotos } = require('../controllers/categoriesController')
 
 const index = async (req, res) => {
 
+    try {
+
+        const photos = await prisma.photo.findMany({
+            where: {
+                visible: true
+            },
+            include: {
+                category: {
+                    select: { name: true }
+                }
+            }
+        })
+        console.log(photos)
+        return res.status(200).json({ data: photos })
+
+    } catch (err) {
+
+        errorHandler(err, req, res);
+    }
 }
 
 const store = async (req, res) => {
@@ -40,7 +59,7 @@ const store = async (req, res) => {
         const photoData = {
             title: uniqueTitle,
             description,
-            visible: visible == true ? true : false,
+            visible: visible == 'true' ? true : false,
             image: req.file.filename,
             userId
         }
