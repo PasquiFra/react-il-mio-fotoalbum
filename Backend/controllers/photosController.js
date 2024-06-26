@@ -25,7 +25,6 @@ const index = async (req, res) => {
                 }
             }
         })
-        console.log(photos)
         return res.status(200).json({ data: photos })
 
     } catch (err) {
@@ -110,6 +109,64 @@ const show = async (req, res) => {
 
 const update = async (req, res) => {
 
+    const title = req.params.title
+
+    try {
+
+        // Cerco la foto da modificare
+        const photoToUpdate = (await prisma.photo.findUnique({
+            where: { title: title }
+        }))
+
+        if (!photoToUpdate) {
+            throw new Error("La foto non è stata trovata", 404)
+        }
+
+        // validazione dell'utente tramite token. ricavo le info dell'utente dal token 
+        // ed estrapolo l'ID verificando con il DB con getUserId(token)
+        const authHeader = req.headers.authorization;
+        const token = authHeader && authHeader.split(" ")[1];
+
+        const userId = await getUserId(token)
+        const photoUserId = photoToUpdate.userId
+
+        // verifico che lo userId della foto corrisponda allo userId dell'utente loggato
+        if (userId != photoUserId) {
+            throw new Error("Non sei autorizzato a modificare questa foto", 405)
+        } else {
+
+
+            const { title, description, category, visible } = req.body
+
+            const categoryIds = await storeFromPhotos(req, res, category);
+            const uniqueTitle = await titleSlugger(title);
+
+
+            const data = {
+                title: uniqueTitle,
+                image: req.file.filename,
+                description,
+                visible: visible == 'true' ? true : false,
+                category: {
+                    connect: categoryIds.map(catId => ({ id: catId }))
+                }
+            }
+
+            const updatedPhoto = await prisma.photo.update({
+                where: { title: photoToUpdate.title },
+                data
+            })
+
+            deleteFile(photoToUpdate.image, 'photos');
+
+            res.status(200).json(updatedPhoto)
+        }
+    } catch (err) {
+        if (req.file) {
+            deleteFile(req.file.filename, 'photos');
+        }
+        errorHandler(err, req, res);
+    }
 }
 
 const destroy = async (req, res) => {
@@ -135,7 +192,7 @@ const destroy = async (req, res) => {
         const userId = await getUserId(token)
         const photoUserId = photoToDelete.userId
 
-        //! verifico che lo userId del post da cambiare corrisponda allo userId dell'utente loggato
+        // verifico che lo userId della foto corrisponda allo userId dell'utente loggato
         if (userId != photoUserId) {
             throw new Error("Non sei autorizzato a cancellare questa foto", 405)
         } else {

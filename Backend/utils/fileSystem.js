@@ -7,6 +7,7 @@ const deleteFile = (fileName, picType) => {
         return picType === 'userPic' ? 'profileImg' : 'photos'
     }
     const filePath = path.join(__dirname, '../public', folder(), fileName);
+    console.log(filePath)
     fs.unlinkSync(filePath);
 }
 
