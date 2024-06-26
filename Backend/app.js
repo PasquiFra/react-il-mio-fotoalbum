@@ -17,13 +17,17 @@ const routeNotFound = require('./middlewares/routeNotFound');
 const errorHandler = require('./middlewares/errorHandler');
 const photosRouter = require('./routers/photosRouter');
 const categoriesRouter = require('./routers/categoriesRouter');
+const userAuth = require('./routers/userAuthRouter');
 
 
-//! Logica dell'app: rotte, middlewares ecc.
+//? Logica dell'app: rotte, middlewares ecc.
 
 app.get("/", (req, res) => {
     res.send('Home Page');
 })
+
+// rotta di registrazione/login utente
+app.use("/auth", userAuth);
 
 app.use("/photos", photosRouter)
 app.use("/categories", categoriesRouter)
