@@ -122,6 +122,12 @@ const update = async (req, res) => {
             throw new Error("La foto non è stata trovata", 404)
         }
 
+        //se il file che ricevo non è un'immagine lo cancello
+        if (!req.file.mimetype.includes('image')) {
+            deleteFile(req.file.filename, 'photos');
+        }
+
+
         // validazione dell'utente tramite token. ricavo le info dell'utente dal token 
         // ed estrapolo l'ID verificando con il DB con getUserId(token)
         const authHeader = req.headers.authorization;
@@ -144,7 +150,7 @@ const update = async (req, res) => {
 
             const data = {
                 title: uniqueTitle,
-                image: req.file.filename,
+                image: req.file && req.file.mimetype.includes('image') ? req.file.filename : photoToUpdate.image,
                 description,
                 visible: visible == 'true' ? true : false,
                 category: {
@@ -157,7 +163,10 @@ const update = async (req, res) => {
                 data
             })
 
-            deleteFile(photoToUpdate.image, 'photos');
+            // se l'immagine che ricevo è conforme cancello quella vecchia
+            if (req.file && req.file.mimetype.includes('image')) {
+                deleteFile(photoToUpdate.image, 'photos');
+            }
 
             res.status(200).json(updatedPhoto)
         }
