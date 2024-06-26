@@ -14,21 +14,39 @@ const { storeFromPhotos } = require('../controllers/categoriesController')
 const index = async (req, res) => {
 
     const { category } = req.query
-
     try {
+        if (req.query && category) {
 
-        const photos = await prisma.photo.findMany({
-            where: {
-                visible: true
-            },
-            include: {
-                category: {
-                    select: { name: true }
+            const photos = await prisma.photo.findMany({
+                where: {
+                    visible: true,
+                    category: {
+                        some: {
+                            name: category
+                        }
+                    }
+                },
+                include: {
+                    category: {
+                        select: { name: true }
+                    }
                 }
-            }
-        })
-        return res.status(200).json({ data: photos })
+            })
+            return res.status(200).json({ data: photos })
+        } else {
 
+            const photos = await prisma.photo.findMany({
+                where: {
+                    visible: true
+                },
+                include: {
+                    category: {
+                        select: { name: true }
+                    }
+                }
+            })
+            return res.status(200).json({ data: photos })
+        }
     } catch (err) {
 
         errorHandler(err, req, res);
@@ -124,10 +142,6 @@ const update = async (req, res) => {
             throw new Error("La foto non è stata trovata", 404)
         }
 
-        //se il file che ricevo non è un'immagine lo cancello
-        // if (!req.file) {
-        //     req.file = ''
-        // }
         if (!req.file?.mimetype.includes('image')) {
             req.file?.filename ? deleteFile(req.file.filename, 'photos') : '';
         }
