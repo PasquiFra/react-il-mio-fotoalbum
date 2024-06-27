@@ -12,7 +12,7 @@ const PhotoList = () => {
         page: null,
         totalPages: null
     });
-    let endpoint = `http://localhost:3000/photos?page=1`;
+    let endpoint = `http://localhost:3000/photos`;
 
     const fetchPhotoList = async (changePage) => {
 
@@ -97,27 +97,21 @@ const PhotoList = () => {
 
             <div className='text-center my-4'>
                 <div className='pagination text-center'>
-
                     <button
                         onClick={handlePrevPage}
-                        className={pageInfo.page == 1 ? "disabled" : ''}
-                    >
+                        className={pageInfo.page == 1 ? "disabled" : ''}>
                         Previous
                     </button>
-
 
                     <button className='isActive'>
                         {pageInfo.page} di {pageInfo.totalPages}
                     </button>
 
-
                     <button
                         onClick={handleNextPage}
-                        className={pageInfo.page == pageInfo.totalPages ? "disabled" : ''}
-                    >
+                        className={pageInfo.page == pageInfo.totalPages ? "disabled" : ''}>
                         Next
                     </button>
-
                 </div>
             </div>
 
