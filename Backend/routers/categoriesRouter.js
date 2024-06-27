@@ -3,7 +3,7 @@ const router = express.Router();
 
 // import dei moduli
 const { loggedUser } = require("../middlewares/authentication");
-const { index, store, show, update, destroy } = require('../controllers/categoriesController')
+const { index, store, show, destroy } = require('../controllers/categoriesController')
 
 // Rotte /categories 
 router.use("/", loggedUser)
