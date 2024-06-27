@@ -6,9 +6,9 @@ const { loggedUser } = require("../middlewares/authentication");
 const { index, store, show, update, destroy } = require('../controllers/categoriesController')
 
 // Rotte /categories 
-router.get("/", index);
-
 router.use("/", loggedUser)
+
+router.get("/", index);
 
 router.post("/", store);
 

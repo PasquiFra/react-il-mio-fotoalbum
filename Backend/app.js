@@ -17,6 +17,7 @@ const routeNotFound = require('./middlewares/routeNotFound');
 const errorHandler = require('./middlewares/errorHandler');
 const photosRouter = require('./routers/photosRouter');
 const categoriesRouter = require('./routers/categoriesRouter');
+const contactsRouter = require('./routers/contactsRouter');
 const userAuth = require('./routers/userAuthRouter');
 
 
@@ -31,6 +32,7 @@ app.use("/auth", userAuth);
 
 app.use("/photos", photosRouter)
 app.use("/categories", categoriesRouter)
+app.use("/contacts", contactsRouter)
 
 // middlewares per errori di rotta/generici
 app.use(routeNotFound);
