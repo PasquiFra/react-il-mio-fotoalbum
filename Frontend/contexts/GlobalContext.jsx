@@ -14,9 +14,9 @@ const GlobalProvider = ({ children }) => {
     }
 
     return (
-        <GlobalContext.provider value={value} >
+        <GlobalContext.Provider value={value} >
             {children}
-        </GlobalContext.provider>
+        </GlobalContext.Provider>
     )
 }
 
