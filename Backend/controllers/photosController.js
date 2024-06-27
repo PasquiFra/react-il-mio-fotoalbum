@@ -79,6 +79,24 @@ const index = async (req, res) => {
     }
 }
 
+const allList = async (req, res) => {
+    try {
+
+        const photos = await prisma.photo.findMany({
+            include: {
+                category: {
+                    select: { name: true }
+                }
+            }
+        })
+        return res.status(200).json({ data: photos })
+
+
+    } catch (err) {
+        errorHandler(err, req, res);
+    }
+}
+
 const store = async (req, res) => {
 
     const { title, description, visible, category } = req.body
@@ -264,5 +282,5 @@ const destroy = async (req, res) => {
 }
 
 module.exports = {
-    index, store, show, update, destroy
+    index, store, show, update, destroy, allList
 }
