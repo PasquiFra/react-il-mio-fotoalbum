@@ -8,6 +8,7 @@ const { getUserId } = require("../utils/getUserId");
 const { titleSlugger } = require('../utils/titleSlugger')
 const { deleteFile } = require('../utils/fileSystem')
 const { storeFromPhotos } = require('../controllers/categoriesController')
+const path = require("path");
 
 //? azioni delle rotte
 
@@ -18,7 +19,7 @@ const index = async (req, res) => {
 
         // setup paginazione
         // prelevo gli elementi dalla req
-        let { page = 1, limit = 5 } = req.query;
+        let { page = 1, limit = 9 } = req.query;
 
         // se viene richiesta una pagina = 0 o negativa restituisco la prima pagina
         if (page <= 0) {
@@ -132,7 +133,7 @@ const allList = async (req, res) => {
     try {
         // setup paginazione
         // prelevo gli elementi dalla req
-        let { page = 1, limit = 5, orderBy = 'desc' } = req.query;
+        let { page = 1, limit = 9, orderBy = 'desc' } = req.query;
 
         // se viene richiesta una pagina = 0 o negativa restituisco la prima pagina
         if (page <= 0) {
@@ -363,6 +364,17 @@ const destroy = async (req, res) => {
     }
 }
 
+const sendImage = (req, res) => {
+    console.log("arrivato")
+    const imageName = req.params.image;
+    console.log(imageName)
+    const imagePath = path.join(__dirname, '../public', 'photos', imageName);
+
+    // Invia il file immagine al frontend
+    res.sendFile(imagePath);
+
+}
+
 module.exports = {
-    index, store, show, update, destroy, allList
+    index, store, show, update, destroy, allList, sendImage
 }

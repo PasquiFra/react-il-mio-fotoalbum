@@ -7,12 +7,13 @@ const uploader = multer({ dest: "public/photos" });
 
 // import dei moduli
 const { loggedUser } = require("../middlewares/authentication");
-const { index, allList, store, show, update, destroy } = require('../controllers/photosController')
+const { index, allList, store, show, update, destroy, sendImage } = require('../controllers/photosController')
 const validator = require('../middlewares/validator');
 const { postValidation } = require('../validations/postValidator')
 
 // Rotte /photos 
 router.get("/", index);
+router.get("/:image", sendImage);
 
 router.use("/", loggedUser)
 router.get("/all-list", allList);
