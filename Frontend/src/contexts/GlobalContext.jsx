@@ -7,10 +7,12 @@ import axios from "axios";
 
 const GlobalProvider = ({ children }) => {
 
+    const [errors, setErrors] = useState([]);
 
 
     const value = {
-
+        setErrors,
+        errors
     }
 
     return (

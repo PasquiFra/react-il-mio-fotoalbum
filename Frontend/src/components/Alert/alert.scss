@@ -4,16 +4,12 @@
     bottom: 30%;
     right: 30%;
     left: 30%;
-    z-index: 1;
+    z-index: 2;
 
     background-color: rgba(0, 0, 0, 0.842);
     color: white;
 
     h3 {
         text-align: center;
-    }
-
-    &.close {
-        display: none;
     }
 }
