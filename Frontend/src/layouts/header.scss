@@ -1,73 +1,80 @@
-.header-nav {
-  width: 100vw;
-  height: 75px;
-  position: fixed;
-  top: 0;
-  z-index: 1;
+nav {
+  position: relative;
 
-  padding: 5px 20px;
+  .header-nav {
+    width: 100vw;
+    height: 75px;
+    position: fixed;
+    top: 0;
+    z-index: 2;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    padding: 5px 20px;
 
-  background-color: #eb5d0b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  h1 {
-    color: white;
-  }
+    background-color: #eb5d0b;
 
-  #logo-img {
-    width: 150px;
-    height: 50px;
+    h1 {
+      color: white;
+    }
 
-    img {
-      height: 100%;
-      width: auto;
+    #logo-img {
+      width: 150px;
+      height: 50px;
+
+      img {
+        height: 100%;
+        width: auto;
+      }
+    }
+
+    #authentication {
+      width: 200px;
+      text-align: center;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      button {
+        font-weight: bold;
+      }
     }
   }
 
-  #auth-logs {
-    width: 150px;
-    text-align: center;
-    color: white;
+  .pages-navbar {
+    width: 100vw;
+    height: 40px;
+    position: fixed;
+    top: 75px;
+    z-index: 1;
 
-    button {
-      font-weight: bold;
-    }
-  }
-}
+    padding: 5px 20px;
+    box-shadow: 0px 2px 8px;
 
-.pages-navbar {
-  width: 100vw;
-  height: 40px;
-  position: fixed;
-  top: 75px;
-  z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  padding: 5px 20px;
-  box-shadow: -5px 2px 8px;
+    background-color: #db6d2ed8;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    ul {
+      margin: 0;
+      padding: 0;
+      flex-basis: 100%;
+      justify-content: space-evenly;
 
-  background-color: #db6d2ed8;
+      li {
+        list-style-type: none;
+        margin: 0 25px;
 
-  ul {
-    margin: 0;
-    padding: 0;
-    flex-basis: 100%;
-    justify-content: space-evenly;
-
-    li {
-      list-style-type: none;
-      margin: 0 25px;
-
-      a {
-        color: white;
-        text-decoration: none;
-        font-weight: 600;
+        a {
+          color: white;
+          text-decoration: none;
+          font-weight: 600;
+        }
       }
     }
   }

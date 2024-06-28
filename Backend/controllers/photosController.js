@@ -243,7 +243,7 @@ const store = async (req, res) => {
         const userId = await getUserId(token)
 
         // Se il file non è un'immagine lo elimino
-        if (!req.file.mimetype.includes('image')) {
+        if (!req.file && !req.file.mimetype.includes('image')) {
             deleteFile(req.file.filename, 'photos');
             throw new Error("Image is not an image file.", 400)
         }

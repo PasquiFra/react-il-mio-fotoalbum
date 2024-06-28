@@ -28,4 +28,16 @@ const storeContact = async (req, res) => {
     }
 }
 
-module.exports = { storeContact }
+const getMessages = async (req, res) => {
+
+    try {
+        const getMessages = await prisma.contact.findMany()
+
+        res.status(200).send(getMessages)
+
+    } catch (err) {
+        errorHandler(err, req, res);
+    }
+}
+
+module.exports = { storeContact, getMessages }

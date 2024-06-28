@@ -13,6 +13,7 @@ import UserAuth from "./components/Authentication/UserAuth";
 import CategoriesPage from "./pages/CategoriesPage";
 import GalleryPage from "./pages/GalleryPage";
 import ContactsPage from "./pages/ContactsPage";
+import InboxPage from "./pages/InboxPage";
 
 
 function App() {
@@ -39,6 +40,8 @@ function App() {
             </SavePrevPage>
           }>
             <Route path="categories" element={<CategoriesPage />} />
+
+            <Route path="inbox" element={<InboxPage />} />
 
           </Route>
 
