@@ -7,7 +7,6 @@ import {
     RxCross2 as CancelCross
 } from "react-icons/rx";
 
-// import componenti
 
 
 const CategoriesPage = () => {
@@ -15,16 +14,14 @@ const CategoriesPage = () => {
     const [categories, setCategories] = useState([]);
     const { isLogged, setIsLogged } = useAuth();
     const { setErrors } = useGlobal()
+    const [categoryToCreate, setCategoryToCreate] = useState('')
 
     const fetchCategories = async () => {
-
         try {
-
             const endpoint = `http://localhost:3000/categories`
 
             const response = await axiosCustom.get(endpoint)
             const categoriesData = response.data
-            console.log(categoriesData)
             setCategories(categoriesData)
 
         } catch (err) {
@@ -47,7 +44,7 @@ const CategoriesPage = () => {
 
     const addCategory = async (event) => {
         event.preventDefault();
-        const value = event.target.category.value;
+        const value = categoryToCreate
 
         try {
             const payload = { "name": value }
@@ -56,9 +53,9 @@ const CategoriesPage = () => {
             const response = await axiosCustom.post(endpoint, payload)
 
             fetchCategories()
-
+            setCategoryToCreate('')
         } catch (err) {
-            setErrors([err.message])
+            setErrors([err.response.data.error])
         }
     }
 
@@ -72,13 +69,17 @@ const CategoriesPage = () => {
     return (
         <section id='categories-page'>
 
-            <h4 className='text-center mb-5'>Categorie</h4>
-            <form onSubmit={(event) => addCategory(event)}>
+            <h3 className='text-center my-2'>Categorie</h3>
+
+            <form onSubmit={(event) => addCategory(event)}
+                className='text-center'>
                 <input
                     className='my-3'
                     type="text"
                     name='category'
                     placeholder="Inserisci categoria"
+                    value={categoryToCreate}
+                    onChange={(event) => setCategoryToCreate(event.target.value)}
                 />
                 <div className='submit'>
                     <button type='submit' className="btn btn-success">Aggiungi</button>
