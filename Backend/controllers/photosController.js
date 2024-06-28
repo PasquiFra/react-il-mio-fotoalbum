@@ -20,7 +20,7 @@ const index = async (req, res) => {
 
             // setup paginazione
             // prelevo gli elementi dalla req
-            let { page = 1, limit = 9 } = req.query;
+            let { page = 1, limit = 3 } = req.query;
 
             // se viene richiesta una pagina = 0 o negativa restituisco la prima pagina
             if (page <= 0) {
@@ -70,7 +70,7 @@ const index = async (req, res) => {
 
             // setup paginazione
             // prelevo gli elementi dalla req
-            let { page = 1, limit = 9 } = req.query;
+            let { page = 1, limit = 3 } = req.query;
 
             // se viene richiesta una pagina = 0 o negativa restituisco la prima pagina
             if (page <= 0) {
@@ -128,7 +128,7 @@ const index = async (req, res) => {
 
             // setup paginazione
             // prelevo gli elementi dalla req
-            let { page = 1, limit = 9 } = req.query;
+            let { page = 1, limit = 3 } = req.query;
 
             // se viene richiesta una pagina = 0 o negativa restituisco la prima pagina
             if (page <= 0) {

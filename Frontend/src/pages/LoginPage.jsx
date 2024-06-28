@@ -45,10 +45,10 @@ const Login = () => {
     }
 
     return (
-        <div className={`login-modal d-flex ${dismiss === true ? 'd-none' : ''}`}>
+        <div id='login-page' className={`login-modal d-flex ${dismiss === true ? 'd-none' : ''}`}>
             <button className='close-login-modal btn btn-danger' onClick={dismissModal}>Chiudi</button>
             <form onSubmit={handleLogin}>
-                <h4 className='text-center mb-5'>Effettua il Login</h4>
+                <h4 className='text-center my-5'>Effettua il Login</h4>
                 <input
                     className='my-3'
                     type="text"

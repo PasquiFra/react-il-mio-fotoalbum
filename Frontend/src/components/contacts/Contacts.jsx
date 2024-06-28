@@ -49,7 +49,7 @@ const Contacts = () => {
     }
 
     return (
-        <section className="contact-form">
+        <section className="contact-form container">
             <div>
                 <h3 >Contattaci</h3>
             </div>

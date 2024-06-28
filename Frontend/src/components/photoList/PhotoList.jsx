@@ -100,7 +100,8 @@ const PhotoList = () => {
     const handlePrevPage = () => {
         if (pageInfo.page > 1) {
             setPageInfo(prev => ({ ...prev, page: parseInt(prev.page) - 1 }));
-            fetchPhotoList(parseInt(pageInfo.page - 1))
+            console.log(parseInt(pageInfo.page) + 1)
+            fetchPhotoList(parseInt(pageInfo.page) - 1)
         }
     };
 
@@ -108,7 +109,8 @@ const PhotoList = () => {
 
         if (pageInfo.page < pageInfo.totalPages) {
             setPageInfo(prev => ({ ...prev, page: parseInt(prev.page) + 1 }));
-            fetchPhotoList(parseInt(pageInfo.page + 1))
+            console.log(parseInt(pageInfo.page) + 1)
+            fetchPhotoList(parseInt(pageInfo.page) + 1)
         }
     };
 
@@ -117,7 +119,7 @@ const PhotoList = () => {
             {
                 photos && photos.length > 0 ?
                     (
-                        <section id='photo-list'>
+                        <section id='photo-list' className='container'>
                             <div id='filter-form' className='container my-4'>
                                 <h3 className='text-center mb-4'>Galleria</h3>
                                 <form onSubmit={handleFiltersSubmit}>
@@ -186,7 +188,7 @@ const PhotoList = () => {
                     )
                     :
                     (
-                        <section id='photo-list'>
+                        <section id='photo-list' className='container'>
                             <h3 className='text-center mb-4'>Non ho trovato foto da mostrare</h3>
                         </section>
                     )
