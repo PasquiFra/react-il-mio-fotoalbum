@@ -74,48 +74,61 @@ const PhotoList = () => {
     };
 
     return (
-        <section id='photo-list'>
+        <>
+            {
+                photos && photos.length > 0 ?
+                    (
+                        <section id='photo-list'>
+                            <h3 className='text-center mb-4'>Galleria</h3>
+                            <ul className='row row-cols-3'>
+                                {
+                                    photos.map((photo, index) => {
+                                        return (
+                                            <li className='card col' key={`${photo}-${index}`}>
+                                                <Link className='text-decoration-none'>
+                                                    <figure>
+                                                        <img src={images[photo.title]} alt={photo.title} />
+                                                    </figure>
+                                                    <h4 className='text-center'>
+                                                        {photo.title}
+                                                    </h4>
+                                                </Link>
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ul>
 
-            <ul className='row row-cols-3'>
-                {
-                    photos.map((photo, index) => {
-                        return (
-                            <li className='card col' key={`${photo}-${index}`}>
-                                <Link className='text-decoration-none'>
-                                    <figure>
-                                        <img src={images[photo.title]} alt={photo.title} />
-                                    </figure>
-                                    <h4 className='text-center'>
-                                        {photo.title}
-                                    </h4>
-                                </Link>
-                            </li>
-                        )
-                    })
-                }
-            </ul>
+                            <div className='text-center my-4'>
+                                <div className='pagination text-center'>
+                                    <button
+                                        onClick={handlePrevPage}
+                                        className={pageInfo.page == 1 ? "disabled" : ''}>
+                                        Previous
+                                    </button>
 
-            <div className='text-center my-4'>
-                <div className='pagination text-center'>
-                    <button
-                        onClick={handlePrevPage}
-                        className={pageInfo.page == 1 ? "disabled" : ''}>
-                        Previous
-                    </button>
+                                    <button className='isActive'>
+                                        {pageInfo.page} di {pageInfo.totalPages}
+                                    </button>
 
-                    <button className='isActive'>
-                        {pageInfo.page} di {pageInfo.totalPages}
-                    </button>
+                                    <button
+                                        onClick={handleNextPage}
+                                        className={pageInfo.page == pageInfo.totalPages ? "disabled" : ''}>
+                                        Next
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+                    )
+                    :
+                    (
+                        <section id='photo-list'>
+                            <h3 className='text-center mb-4'>Non ho trovato foto da mostrare</h3>
+                        </section>
+                    )
 
-                    <button
-                        onClick={handleNextPage}
-                        className={pageInfo.page == pageInfo.totalPages ? "disabled" : ''}>
-                        Next
-                    </button>
-                </div>
-            </div>
-
-        </section>
+            }
+        </>
     )
 }
 

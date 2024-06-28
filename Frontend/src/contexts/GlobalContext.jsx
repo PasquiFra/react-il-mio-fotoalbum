@@ -10,11 +10,31 @@ const GlobalProvider = ({ children }) => {
     const [errors, setErrors] = useState([]);
     const [previousPage, setPreviousPage] = useState('/');
 
+    const pagesList = [
+        {
+            "name": "Home",
+            "path": "/"
+        },
+        {
+            "name": "Gallery",
+            "path": "/gallery"
+        },
+        {
+            "name": "Categories",
+            "path": "/categories"
+        },
+        {
+            "name": "Contacts",
+            "path": "/contacts"
+        }
+    ]
+
     const value = {
         setErrors,
         errors,
         setPreviousPage,
-        previousPage
+        previousPage,
+        pagesList
     }
 
     return (

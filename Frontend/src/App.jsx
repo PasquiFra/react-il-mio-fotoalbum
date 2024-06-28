@@ -11,6 +11,8 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import UserAuth from "./components/Authentication/UserAuth";
 import CategoriesPage from "./pages/CategoriesPage";
+import GalleryPage from "./pages/GalleryPage";
+import ContactsPage from "./pages/ContactsPage";
 
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
             <Route index element={<HomePage />} />
 
             <Route path="login" element={<LoginPage />} />
+            <Route path="gallery" element={<GalleryPage />} />
+            <Route path="contacts" element={<ContactsPage />} />
 
           </Route>
 

@@ -21,7 +21,7 @@ const storeContact = async (req, res) => {
             }
         })
 
-        res.status(200).send(storeContact)
+        res.status(200).send(contactData)
 
     } catch (err) {
         errorHandler(err, req, res);
