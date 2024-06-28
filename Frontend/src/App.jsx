@@ -14,6 +14,7 @@ import CategoriesPage from "./pages/CategoriesPage";
 import GalleryPage from "./pages/GalleryPage";
 import ContactsPage from "./pages/ContactsPage";
 import InboxPage from "./pages/InboxPage";
+import AddPhotoPage from "./pages/AddPhotoPage";
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
           }>
             <Route path="categories" element={<CategoriesPage />} />
 
+            <Route path="add-photo" element={<AddPhotoPage />} />
             <Route path="inbox" element={<InboxPage />} />
 
           </Route>

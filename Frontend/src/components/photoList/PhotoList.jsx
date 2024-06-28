@@ -86,6 +86,7 @@ const PhotoList = () => {
 
     useEffect(() => {
         fetchPhotoList()
+        console.log(photos)
     }, [])
 
     useEffect(() => {
@@ -155,9 +156,20 @@ const PhotoList = () => {
                                                     <figure>
                                                         <img src={images[photo.title]} alt={photo.title} />
                                                     </figure>
-                                                    <h5 className='text-center'>
-                                                        {formattedTitle(photo.title)}
-                                                    </h5>
+                                                    <div>
+                                                        <h5 className='text-center'>
+                                                            {formattedTitle(photo.title)}
+                                                        </h5>
+                                                        <div>
+                                                            {
+                                                                photo.category.map(cat => {
+                                                                    return (
+                                                                        <span className='category-tag'>{cat.name}</span>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </div>
+                                                    </div>
                                                 </Link>
                                             </li>
                                         )
