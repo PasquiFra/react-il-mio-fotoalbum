@@ -26,31 +26,30 @@ const PhotoList = () => {
         }));
     }
     const handleFiltersSubmit = (e) => {
-        //e.preventDefault()
+        e.preventDefault()
+        fetchPhotoList()
+    }
+
+    const fetchPhotoList = async (changePage) => {
+        let endpoint = `http://localhost:3000/photos`;
+
         const filterSearchTerm = `${filters.searchTerm ? `searchTerm=${filters.searchTerm}` : ''}`
         const filterOrderBy = `${filters.orderBy ? `orderBy=${filters.orderBy}` : ''}`
         let filter;
         if (filterSearchTerm && filterOrderBy) {
-            filter = `?${filterSearchTerm}&${filterOrderBy}`
+            filter = `${filterSearchTerm}&${filterOrderBy}`
         } else {
-            if (filterSearchTerm) { filter = `?${filterSearchTerm}` }
-            else { filter = `?${filterOrderBy}` }
+            if (filterSearchTerm) { filter = `${filterSearchTerm}` }
+            else { filter = `${filterOrderBy}` }
         }
 
-        fetchPhotoList(null, filter)
-    }
-
-    const fetchPhotoList = async (changePage, filter) => {
-        let endpoint = `http://localhost:3000/photos`;
-
         try {
-            if (changePage) {
+            if (changePage && filter) {
+                endpoint = `http://localhost:3000/photos?${filter}&page=${changePage}`
+            } else if (changePage) {
                 endpoint = `http://localhost:3000/photos?page=${changePage}`
-            }
-
-
-            if (filter) {
-                endpoint = `http://localhost:3000/photos${filter}`
+            } else {
+                endpoint = `http://localhost:3000/photos?${filter}`
             }
 
             const response = await axiosCustom.get(endpoint)
@@ -86,7 +85,7 @@ const PhotoList = () => {
     }
 
     useEffect(() => {
-        fetchPhotoList(pageInfo.page)
+        fetchPhotoList()
     }, [])
 
     useEffect(() => {
@@ -119,10 +118,10 @@ const PhotoList = () => {
                 photos && photos.length > 0 ?
                     (
                         <section id='photo-list'>
-                            <div>
+                            <div id='filter-form' className='container my-4'>
                                 <h3 className='text-center mb-4'>Galleria</h3>
                                 <form onSubmit={handleFiltersSubmit}>
-                                    <div className="input-group input-group-sm mb-3">
+                                    <div className="input-group input-group-sm">
                                         <span className="input-group-text" >Filtra per:</span>
                                         <input
                                             type="text"
@@ -140,7 +139,7 @@ const PhotoList = () => {
                                         <option value="asc">Crescente</option>
                                         <option value="desc">Descrescente</option>
                                     </select>
-                                    <div className='submit'>
+                                    <div className='submit mt-3'>
                                         <button type='submit' className="btn btn-success">Filtra</button>
                                     </div>
                                 </form>

@@ -16,28 +16,27 @@ const index = async (req, res) => {
 
     const { category, searchTerm, orderBy = 'desc' } = req.query
     try {
-
-        // setup paginazione
-        // prelevo gli elementi dalla req
-        let { page = 1, limit = 9 } = req.query;
-
-        // se viene richiesta una pagina = 0 o negativa restituisco la prima pagina
-        if (page <= 0) {
-            page = 1
-        }
-
-        //calcolo dell'offset (numero di elementi da saltare)
-        const offset = (page - 1) * limit;
-        // determino il totale delle foto e delle pagine
-        const totalPhotos = await prisma.photo.count()
-        const totalPages = Math.ceil(totalPhotos / limit)
-
-        // se la pagina non esiste restituisco un errore
-        if (page > totalPages) {
-            throw new Error('La pagina richiesta non esiste.', 400)
-        }
-
         if (req.query && category) {
+
+            // setup paginazione
+            // prelevo gli elementi dalla req
+            let { page = 1, limit = 9 } = req.query;
+
+            // se viene richiesta una pagina = 0 o negativa restituisco la prima pagina
+            if (page <= 0) {
+                page = 1
+            }
+
+            //calcolo dell'offset (numero di elementi da saltare)
+            const offset = (page - 1) * limit;
+            // determino il totale delle foto e delle pagine
+            const totalPhotos = await prisma.photo.count()
+            const totalPages = Math.ceil(totalPhotos / limit)
+
+            // se la pagina non esiste restituisco un errore
+            if (page > totalPages) {
+                throw new Error('La pagina richiesta non esiste.', 400)
+            }
 
             const photos = await prisma.photo.findMany({
                 orderBy: [
@@ -68,6 +67,26 @@ const index = async (req, res) => {
                 totalPages
             })
         } else if (req.query && searchTerm) {
+
+            // setup paginazione
+            // prelevo gli elementi dalla req
+            let { page = 1, limit = 9 } = req.query;
+
+            // se viene richiesta una pagina = 0 o negativa restituisco la prima pagina
+            if (page <= 0) {
+                page = 1
+            }
+
+            //calcolo dell'offset (numero di elementi da saltare)
+            const offset = (page - 1) * limit;
+            // determino il totale delle foto e delle pagine
+            const totalPhotos = await prisma.photo.count()
+            const totalPages = Math.ceil(totalPhotos / limit)
+
+            // se la pagina non esiste restituisco un errore
+            if (page > totalPages) {
+                throw new Error('La pagina richiesta non esiste.', 400)
+            }
 
             const photos = await prisma.photo.findMany({
                 orderBy: [
@@ -106,6 +125,26 @@ const index = async (req, res) => {
             })
 
         } else {
+
+            // setup paginazione
+            // prelevo gli elementi dalla req
+            let { page = 1, limit = 9 } = req.query;
+
+            // se viene richiesta una pagina = 0 o negativa restituisco la prima pagina
+            if (page <= 0) {
+                page = 1
+            }
+
+            //calcolo dell'offset (numero di elementi da saltare)
+            const offset = (page - 1) * limit;
+            // determino il totale delle foto e delle pagine
+            const totalPhotos = await prisma.photo.count()
+            const totalPages = Math.ceil(totalPhotos / limit)
+
+            // se la pagina non esiste restituisco un errore
+            if (page > totalPages) {
+                throw new Error('La pagina richiesta non esiste.', 400)
+            }
 
             const photos = await prisma.photo.findMany({
                 orderBy: [

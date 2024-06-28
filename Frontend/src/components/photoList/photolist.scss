@@ -1,6 +1,28 @@
 #photo-list {
     text-align: center;
 
+    #filter-form {
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+
+            div.input-group {
+                flex-basis: 40%;
+                margin-right: 15px;
+            }
+
+            select {
+                flex-basis: 40%;
+            }
+
+            .submit {
+                width: 100%;
+            }
+        }
+    }
+
     ul {
         margin: 0;
 
