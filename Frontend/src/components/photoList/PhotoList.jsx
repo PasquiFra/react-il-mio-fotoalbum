@@ -63,7 +63,19 @@ const PhotoList = () => {
             setPhotos(photoData)
 
         } catch (err) {
-            setErrors([err.message])
+            console.log(err)
+            let errorMessage;
+            if (err.response.data.error) {
+                errorMessage = err.response.data.error
+                setErrors([errorMessage])
+            } else if (err.response.data.errors) {
+                let errors = err.response.data.errors;
+                let sendErrors = []
+                errors.forEach(item => {
+                    sendErrors.push(item.msg)
+                });
+                setErrors(sendErrors)
+            }
         }
     }
 
@@ -164,7 +176,7 @@ const PhotoList = () => {
                                                             {
                                                                 photo.category.map(cat => {
                                                                     return (
-                                                                        <span className='category-tag'>{cat.name}</span>
+                                                                        <span key={`cat-${cat.name}`} className='category-tag'>{cat.name}</span>
                                                                     )
                                                                 })
                                                             }

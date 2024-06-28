@@ -8,7 +8,7 @@ const Login = () => {
     const [dismiss, setDismiss] = useState(false)
 
     const { login, isLogged, setIsLogged } = useAuth()
-    const { setErrors, setPreviousPage, previousPage } = useGlobal()
+    const { errors, setErrors, setPreviousPage, previousPage } = useGlobal()
 
     const defaultFormData = {
         email: '',
@@ -30,7 +30,7 @@ const Login = () => {
             await login(formData);
 
             setFormData(defaultFormData)
-            setIsLogged(true)
+            errors ? setIsLogged(false) : setIsLogged(true)
             dismissModal()
 
         } catch (err) {
@@ -40,8 +40,7 @@ const Login = () => {
 
     const dismissModal = () => {
         setDismiss(true)
-        console.log(previousPage)
-        navigate(previousPage || "/")
+        errors ? navigate("/") : navigate(previousPage)
     }
 
     return (

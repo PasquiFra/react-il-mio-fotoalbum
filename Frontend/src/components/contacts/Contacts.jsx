@@ -38,12 +38,19 @@ const Contacts = () => {
             redirect()
 
         } catch (err) {
-            const errorMessage = err.response.data.error
-            const errorMessage1 = err.response.data.errors[0].msg
             console.log(err)
-            console.log(errorMessage)
-            console.log(errorMessage1)
-            setErrors([errorMessage || errorMessage1])
+            let errorMessage;
+            if (err.response.data.error) {
+                errorMessage = err.response.data.error
+                setErrors([errorMessage])
+            } else if (err.response.data.errors) {
+                let errors = err.response.data.errors;
+                let sendErrors = []
+                errors.forEach(item => {
+                    sendErrors.push(item.msg)
+                });
+                setErrors(sendErrors)
+            }
         }
 
     }
