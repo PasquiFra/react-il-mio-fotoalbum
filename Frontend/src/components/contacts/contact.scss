@@ -1,12 +1,51 @@
 .contact-form {
     display: flex;
     justify-content: center;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-wrap: wrap;
 
-    h3 {
-        width: 100%;
+    div {
+        flex-basis: 100%;
+
+        h3 {
+            text-align: center;
+        }
     }
 
-    // form {
+    form {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 25px 0;
 
-    // }
+        div {
+            flex-basis: 75%;
+
+            &.submit {
+                flex-basis: 25%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 15px;
+
+                button {
+                    width: 75%;
+                }
+            }
+
+            label {
+                align-self: center;
+                width: 25%;
+                font-weight: bold;
+            }
+
+            input,
+            textarea {
+                width: 75%;
+                height: 100%;
+                margin: 0 15px;
+            }
+        }
+    }
 }

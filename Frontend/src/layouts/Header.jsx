@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext"
 import { useGlobal } from "../contexts/GlobalContext"
 import { createContext, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import './header.scss'
 
 const Header = () => {
     const navigate = useNavigate();

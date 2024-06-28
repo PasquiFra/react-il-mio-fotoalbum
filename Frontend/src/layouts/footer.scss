@@ -1,0 +1,15 @@
+footer {
+  position: fixed;
+  bottom: 0;
+  height: 50px;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+
+  background-color: #eb5d0b;
+
+  #credits {
+    padding: 0 25px;
+    color: white;
+  }
+}

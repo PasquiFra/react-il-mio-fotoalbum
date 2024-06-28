@@ -1,0 +1,74 @@
+.header-nav {
+  width: 100vw;
+  height: 75px;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+
+  padding: 5px 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #eb5d0b;
+
+  h1 {
+    color: white;
+  }
+
+  #logo-img {
+    width: 150px;
+    height: 50px;
+
+    img {
+      height: 100%;
+      width: auto;
+    }
+  }
+
+  #auth-logs {
+    width: 150px;
+    text-align: center;
+    color: white;
+
+    button {
+      font-weight: bold;
+    }
+  }
+}
+
+.pages-navbar {
+  width: 100vw;
+  height: 40px;
+  position: fixed;
+  top: 75px;
+  z-index: 1;
+
+  padding: 5px 20px;
+  box-shadow: -5px 2px 8px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #db6d2ed8;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    flex-basis: 100%;
+    justify-content: space-evenly;
+
+    li {
+      list-style-type: none;
+      margin: 0 25px;
+
+      a {
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+      }
+    }
+  }
+}

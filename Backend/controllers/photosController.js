@@ -61,7 +61,12 @@ const index = async (req, res) => {
                     }
                 }
             })
-            return res.status(200).json({ data: photos })
+            return res.status(200).json({
+                data: photos,
+                page: page,
+                totalPhotos,
+                totalPages
+            })
         } else if (req.query && searchTerm) {
 
             const photos = await prisma.photo.findMany({
@@ -93,7 +98,12 @@ const index = async (req, res) => {
                     }
                 }
             })
-            return res.status(200).json({ data: photos })
+            return res.status(200).json({
+                data: photos,
+                page: page,
+                totalPhotos,
+                totalPages
+            })
 
         } else {
 

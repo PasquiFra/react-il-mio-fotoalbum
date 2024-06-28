@@ -20,7 +20,12 @@ const Contacts = () => {
 
     const sendContactForm = async (event) => {
         event.preventDefault();
+
         try {
+            if (!contactEmail.trim() || !contactMessage.trim()) {
+                return setErrors(['Devi riempire tutti i campi'])
+            }
+
             const payload = {
                 "email": contactEmail,
                 "message": contactMessage
@@ -43,34 +48,46 @@ const Contacts = () => {
 
     }
 
-    useEffect(() => {
-        console.log(isFormSubmitted)
-    }, [isFormSubmitted])
-
     return (
         <section className="contact-form">
-            <h3 >Contattaci</h3>
+            <div>
+                <h3 >Contattaci</h3>
+            </div>
             {
                 !isFormSubmitted ?
                     <form onSubmit={sendContactForm}
                         className='text-center'
                     >
-                        <input
-                            className='my-3'
-                            type="text"
-                            name='email'
-                            placeholder="Inserisci email"
-                            value={contactEmail}
-                            onChange={(event) => setContactEmail(event.target.value)}
-                        />
-                        <input
-                            className='my-3'
-                            type="text"
-                            name='message'
-                            placeholder="Inserisci messaggio..."
-                            value={contactMessage}
-                            onChange={(event) => setContactMessage(event.target.value)}
-                        />
+                        <div>
+
+                            <div className='d-flex'>
+                                <label htmlFor="contact-form-email">Email</label>
+                                <input
+                                    id='contact-form-email'
+                                    className='my-3'
+                                    type="text"
+                                    name='email'
+                                    placeholder="Inserisci email"
+                                    value={contactEmail}
+                                    onChange={(event) => setContactEmail(event.target.value)}
+                                />
+
+                            </div>
+                            <div className='d-flex'>
+
+                                <label htmlFor="contact-form-message">Messaggio</label>
+
+                                <textarea
+                                    id='contact-form-message'
+                                    className='my-3'
+                                    name='message'
+                                    placeholder="Inserisci messaggio..."
+                                    value={contactMessage}
+                                    onChange={(event) => setContactMessage(event.target.value)}
+                                />
+
+                            </div>
+                        </div>
                         <div className='submit'>
                             <button type='submit' className="btn btn-success">Inviaci una Richiesta</button>
                         </div>
