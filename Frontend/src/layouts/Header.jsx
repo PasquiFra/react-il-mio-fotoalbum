@@ -16,8 +16,10 @@ const Header = () => {
     }
 
     useEffect(() => {
-        setIsLogged(isLogged)
-    }, [isLogged])
+        if (localStorage.token) {
+            setIsLogged(true)
+        }
+    }, [localStorage.token])
 
     return (
         <nav className='header-nav'>
@@ -29,8 +31,8 @@ const Header = () => {
             </div>
             <div id="auth-logs">
                 {
-                    !isLogged ? <button className='btn btn-primary' onClick={() => navigate("login")}>Login</button>
-                        : <button className='btn btn-secondary' onClick={logout}>Logout</button>
+                    !isLogged ? <button className='btn btn-login' onClick={() => navigate("login")}>Login</button>
+                        : <button className='btn btn-logout' onClick={logout}>Logout</button>
                 }
             </div>
         </nav>

@@ -8,11 +8,13 @@ import axios from "axios";
 const GlobalProvider = ({ children }) => {
 
     const [errors, setErrors] = useState([]);
-
+    const [previousPage, setPreviousPage] = useState('/');
 
     const value = {
         setErrors,
-        errors
+        errors,
+        setPreviousPage,
+        previousPage
     }
 
     return (

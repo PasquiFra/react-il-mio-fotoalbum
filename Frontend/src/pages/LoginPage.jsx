@@ -1,6 +1,5 @@
-import './auth.scss'
-import { useGlobal } from '../../contexts/GlobalContext';
-import { useAuth } from '../../contexts/AuthContext';
+import { useGlobal } from '../contexts/GlobalContext';
+import { useAuth } from '../contexts/AuthContext';
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
@@ -9,7 +8,7 @@ const Login = () => {
     const [dismiss, setDismiss] = useState(false)
 
     const { login, isLogged, setIsLogged } = useAuth()
-    const { setErrors } = useGlobal()
+    const { setErrors, setPreviousPage, previousPage } = useGlobal()
 
     const defaultFormData = {
         email: '',
@@ -32,7 +31,7 @@ const Login = () => {
 
             setFormData(defaultFormData)
             setIsLogged(true)
-            setDismiss(true)
+            dismissModal()
 
         } catch (err) {
             setErrors([err.message])
@@ -41,7 +40,8 @@ const Login = () => {
 
     const dismissModal = () => {
         setDismiss(true)
-        navigate("/")
+        console.log(previousPage)
+        navigate(previousPage || "/")
     }
 
     return (

@@ -2,12 +2,16 @@
 import { Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { AuthProvider } from './contexts/AuthContext'
+import { useAuth } from "./contexts/AuthContext";
+import SavePrevPage from './utils/SavePrevPage'
 
 // import componenti
 import DefaultLayout from "./layouts/DefaultLayout";
 import HomePage from "./pages/HomePage";
-import Login from "./components/Authentication/Login";
-import { useAuth } from "./contexts/AuthContext";
+import LoginPage from "./pages/LoginPage";
+import UserAuth from "./components/Authentication/UserAuth";
+import CategoriesPage from "./pages/CategoriesPage";
+
 
 function App() {
 
@@ -19,10 +23,20 @@ function App() {
           <Route path="/" element={<DefaultLayout />} >
             <Route index element={<HomePage />} />
 
-            <Route path="login" element={<Login />} />
+            <Route path="login" element={<LoginPage />} />
 
           </Route>
 
+          <Route path="/" element={
+            <SavePrevPage>
+              <UserAuth>
+                <DefaultLayout />
+              </UserAuth>
+            </SavePrevPage>
+          }>
+            <Route path="categories" element={<CategoriesPage />} />
+
+          </Route>
 
         </Routes>
       </AuthProvider>

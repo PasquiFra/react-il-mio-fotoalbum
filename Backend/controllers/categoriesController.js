@@ -22,17 +22,23 @@ const index = async (req, res) => {
 
 const store = async (req, res) => {
     const { name } = req.body
-    const data = { name }
 
     try {
+        if (!name) {
+            throw new Error("Non posso aggiungere questa categoria")
+        }
 
         const categoryExists = await prisma.category.findUnique({
             where: {
-                name: data.name
+                name: name
             }
         });
         if (!categoryExists) {
-            const createCategory = await prisma.category.create({ name });
+            const createCategory = await prisma.category.create({
+                data: {
+                    name: name,
+                }
+            });
             res.status(200).send(createCategory)
         } else {
             throw new Error("Categoria già esistente")
