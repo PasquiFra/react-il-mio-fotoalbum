@@ -3,12 +3,13 @@ import { createContext, useContext, useEffect, useState } from "react";
 const GlobalContext = createContext();
 
 // import componenti
-import axios from "axios";
+import axiosCustom from '../utils/axiosInterceptor'
 
 const GlobalProvider = ({ children }) => {
 
     const [errors, setErrors] = useState([]);
     const [previousPage, setPreviousPage] = useState('/');
+    const [category, setCategory] = useState([])
 
     const pagesList = [
         {
@@ -26,15 +27,49 @@ const GlobalProvider = ({ children }) => {
         {
             "name": "Contacts",
             "path": "/contacts"
+        },
+        {
+            "name": "Add photo",
+            "path": "/add-photo"
         }
     ]
+
+    const fetchData = async () => {
+        const categoriesEndpoint = "http://127.0.0.1:3000/categories";
+
+        try {
+            const categories = await axiosCustom.get(categoriesEndpoint);
+
+            setCategory(categories.data);
+        }
+        catch (err) {
+            console.log(err)
+            let errorMessage;
+            if (err.response.data.error) {
+                errorMessage = err.response.data.error
+                setErrors([errorMessage])
+            } else if (err.response.data.errors) {
+                let errors = err.response.data.errors;
+                let sendErrors = []
+                errors.forEach(item => {
+                    sendErrors.push(item.msg)
+                });
+                setErrors(sendErrors)
+            }
+        }
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     const value = {
         setErrors,
         errors,
         setPreviousPage,
         previousPage,
-        pagesList
+        pagesList,
+        category
     }
 
     return (

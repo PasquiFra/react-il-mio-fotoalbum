@@ -49,7 +49,7 @@ const register = async (req, res) => {
         const { username, email, password } = req.body
 
         // se il tipo di file non è "image" lo cancello
-        if (!req.file.mimetype.includes('image')) {
+        if (!req.file && !req.file.mimetype.includes('image')) {
             req.file?.filename && deleteFile(req.file.filename, 'userPic');
             throw new Error("Image is not an image file.", 400)
         }
@@ -76,7 +76,7 @@ const register = async (req, res) => {
         // restituisco il token di login ed i dati dell'utente
         res.json({ token, data: user });
     } catch (err) {
-        if (req.file) {
+        if (req.file && req.file.filenam) {
             deleteFile(req.file.filename, 'userPic');
         }
         errorHandler(err, req, res);

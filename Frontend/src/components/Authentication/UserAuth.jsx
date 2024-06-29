@@ -4,19 +4,23 @@ import { useEffect } from "react";
 
 export default function ({ children }) {
 
-    const { isLogged } = useAuth();
-
-    const checkLog = () => {
-        if (!isLogged) { return <Navigate to="login" /> }
-    }
+    const { isLogged, setIsLogged } = useAuth();
 
     useEffect(() => {
-        checkLog()
-    }, [])
+        const checkToken = () => {
+            const token = localStorage.getItem("token");
+            if (token) {
+                setIsLogged(true);
+            } else {
+                setIsLogged(false);
+            }
+        };
+        checkToken();
+    }, [setIsLogged]);
 
-    return (
-        <>
-            {children}
-        </>
-    );
+    if (!isLogged) {
+        return <Navigate to="/login" />;
+    }
+
+    return <>{children}</>;
 }

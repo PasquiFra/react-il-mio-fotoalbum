@@ -24,8 +24,8 @@ const AuthProvider = ({ children }) => {
             localStorage.setItem('token', loginInfo.token);
             localStorage.setItem('username', JSON.stringify(loginInfo.data.username));
             localStorage.setItem('email', JSON.stringify(loginInfo.data.email));
+
         } catch (err) {
-            console.log(err)
             let errorMessage;
             if (err.response.data.error) {
                 errorMessage = err.response.data.error
@@ -40,6 +40,12 @@ const AuthProvider = ({ children }) => {
             }
         }
     }
+
+    useEffect(() => {
+        if (localStorage.token) {
+            setIsLogged(true)
+        }
+    }, [])
 
     const value = {
         login,

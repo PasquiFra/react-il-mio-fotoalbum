@@ -27,7 +27,7 @@ const InboxPage = () => {
                 {
                     messages.map(mess => {
                         return (
-                            <li>
+                            <li key={`mess-${mess.id}`}>
                                 <h5><strong>Email: </strong>{mess.email}</h5>
                                 <p><strong>Messaggio: </strong>{mess.message}</p>
                             </li>

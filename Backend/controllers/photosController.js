@@ -20,7 +20,7 @@ const index = async (req, res) => {
 
             // setup paginazione
             // prelevo gli elementi dalla req
-            let { page = 1, limit = 3 } = req.query;
+            let { page = 1, limit = 5 } = req.query;
 
             // se viene richiesta una pagina = 0 o negativa restituisco la prima pagina
             if (page <= 0) {
@@ -70,7 +70,7 @@ const index = async (req, res) => {
 
             // setup paginazione
             // prelevo gli elementi dalla req
-            let { page = 1, limit = 3 } = req.query;
+            let { page = 1, limit = 5 } = req.query;
 
             // se viene richiesta una pagina = 0 o negativa restituisco la prima pagina
             if (page <= 0) {
@@ -128,7 +128,7 @@ const index = async (req, res) => {
 
             // setup paginazione
             // prelevo gli elementi dalla req
-            let { page = 1, limit = 3 } = req.query;
+            let { page = 1, limit = 5 } = req.query;
 
             // se viene richiesta una pagina = 0 o negativa restituisco la prima pagina
             if (page <= 0) {
@@ -244,7 +244,7 @@ const store = async (req, res) => {
 
         // Se il file non è un'immagine lo elimino
         if (!req.file && !req.file.mimetype.includes('image')) {
-            deleteFile(req.file.filename, 'photos');
+            deleteFile(req.file.filename);
             throw new Error("Image is not an image file.", 400)
         }
 
@@ -271,8 +271,8 @@ const store = async (req, res) => {
         res.status(200).send(createPhoto)
 
     } catch (err) {
-        if (req.file) {
-            deleteFile(req.file.filename, 'photos');
+        if (req.file && req.file.filename) {
+            deleteFile(req.file.filename);
         }
         errorHandler(err, req, res);
     }
@@ -319,7 +319,7 @@ const update = async (req, res) => {
         }
 
         if (!req.file?.mimetype.includes('image')) {
-            req.file?.filename ? deleteFile(req.file.filename, 'photos') : '';
+            req.file?.filename ? deleteFile(req.file.filename) : '';
         }
 
 
@@ -360,14 +360,14 @@ const update = async (req, res) => {
 
             // se l'immagine che ricevo è conforme cancello quella vecchia
             if (req.file && req.file.mimetype.includes('image')) {
-                deleteFile(photoToUpdate.image, 'photos');
+                deleteFile(photoToUpdate.image);
             }
 
             res.status(200).json(updatedPhoto)
         }
     } catch (err) {
         if (req.file) {
-            deleteFile(req.file.filename, 'photos');
+            deleteFile(req.file.filename);
         }
         errorHandler(err, req, res);
     }
@@ -400,7 +400,7 @@ const destroy = async (req, res) => {
         if (userId != photoUserId) {
             throw new Error("Non sei autorizzato a cancellare questa foto", 405)
         } else {
-            deleteFile(photoToDelete.image, 'photos');
+            deleteFile(photoToDelete.image);
             await prisma.photo.delete({
                 where: { title: title }
             })
